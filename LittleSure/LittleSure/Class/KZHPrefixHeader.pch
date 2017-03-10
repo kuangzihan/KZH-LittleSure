@@ -1,0 +1,187 @@
+//
+//  KZHPrefixHeader.pch
+//  LittleSure
+//
+//  Created by 邝子涵 on 2017/2/20.
+//  Copyright © 2017年 邝子涵. All rights reserved.
+//
+
+#ifndef KZHPrefixHeader_pch
+#define KZHPrefixHeader_pch
+
+
+
+#endif /* KZHPrefixHeader_pch */
+
+#ifdef __OBJC__
+
+/******* 数据库 ******/
+#define FMDB_LittleSureDataBase @"LittleSureDataBase"                                        // 数据库名称
+#define FMDB_GetLittleSureDataBase [[KZHFMDBTool tool] getDBWithDBName:FMDB_LittleSureDataBase]   // 获取LittleSureDataBase
+
+
+
+// 获取当前聊天内容表名
+#define FMDB_ChatMessageTable   @"ChatMessageTable"
+// 设置进行过通话的好友表结构
+#define FMDB_ChatMessageTableInfo  @{@"friendType":@"integer", @"message":@"text", @"iconURL":@"text", @"nickName":@"text", @"userName":@"text PRIMARY KEY NOT NULL"}
+// 查询进行过通话的好友表结构
+#define FMDB_ChatMessageTableQuery @{@"friendType":@"integer", @"message":@"text", @"iconURL":@"text", @"nickName":@"text", @"userName":@"text"}
+
+// 当前通讯录表
+#define FMDB_AddressTable   @"AddressTable"
+// 当前通讯录表结构
+#define FMDB_AddressTableInfo  @{@"friendType":@"text", @"message":@"text", @"iconURL":@"text", @"nickName":@"text", @"userName":@"text PRIMARY KEY NOT NULL"}
+#define FMDB_AddressTableQuery @{@"friendType":@"text", @"message":@"text", @"iconURL":@"text", @"nickName":@"text", @"userName":@"text"}
+
+
+
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "AppDelegate.h"
+
+
+
+// 3rdparty
+#import "Masonry.h"
+#import "EaseUI-Prefix.pch"
+#import <Hyphenate/Hyphenate.h>
+#import "EaseUI.h"
+#import "TTGlobalUICommon.h"
+#import "MJRefresh.h"
+#import "JSONModel.h"
+#import <BmobSDK/Bmob.h>
+#import "MWPhotoBrowser.h"
+#import <TZImagePickerController.h>
+#import <TZImageManager.h>
+#import <IQKeyboardManager.h>
+
+// Category
+#import "UIView+Extension.h"
+#import "UILabel+Extension.h"
+#import "UITableView+Extension.h"
+#import "UIImage+Scale.h"
+#import "UITextField+ExtentRange.h"
+#import "UITextField+Extension.h"
+#import "UIImage+Scale.h"
+
+#import "NSArray+Extension.h"
+#import "NSString+Extension.h"
+#import "NSDictionary+Extension.h"
+
+#import "AppDelegate+KZHMob.h"
+
+
+// Base Class
+#import "KZHBaseNavigationController.h"
+#import "KZHBaseViewController.h"
+#import "KZHBaseTabBarController.h"
+
+
+// logo
+#import "KZHLogo.h"
+// 个人信息model
+#import "KZHUserInfoModel.h"
+// 搜索框
+#import "KZHSearchView.h"
+
+
+
+// 全局常量
+#import "LoginConst.h"
+
+// 工具类
+#import "KZHMaskLayer.h"            // 圆角
+#import "KZHShowMessage.h"          // 提示框
+#import "KZHContactDataHelper.h"    // 格式化联系人列表
+
+#import "KZHUserInfoTool.h"         // bmob用户信息管理工具
+#import "KZHFMDBUserInfoTool.h"     // 用户管理类
+#import "KZHManager.h"
+
+#import "KZHFMDBTool.h"             // FMDB工具类
+
+
+// 屏幕宽度
+#define SCREEN_WIDTH      [UIScreen mainScreen].bounds.size.width
+// 屏幕高度
+#define SCREEN_HEIGHT     [UIScreen mainScreen].bounds.size.height
+
+
+// 适配宽
+#define AD_WIDTH(S)       (SCREEN_WIDTH / (375.0 / S))
+// 适配高
+#define AD_HEIGHT(S)      (SCREEN_HEIGHT / (667.0 / S))
+
+
+
+// 提示框
+#define SHOW(message)      [KZHShowMessage showMessage:message];
+
+//打印 －－带有当前行数
+#if DEBUG
+#define LSLog(FORMAT, ...) fprintf(stderr,"\nfunction:%s line:%d\n%s\n", __FUNCTION__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String])
+#else
+#define LSLog(FORMAT, ...) nil
+#endif
+
+//debug 打印 －－带有当前行数 并弹出警告窗
+#ifdef DEBUG
+#   define KZHLog(fmt, ...)  { UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[NSString stringWithFormat:@"%s\n [Line %d] ", __PRETTY_FUNCTION__, __LINE__] message:[NSString stringWithFormat:fmt, ##__VA_ARGS__]  delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil]; [alert show]; }
+#else
+#   define KZHLog(...)
+#endif
+
+
+// RGB
+#define RGBA(R, G, B, A)  [UIColor colorWithRed:R / 255.0 green:G / 255.0 blue:B / 255.0 alpha:A]
+
+//rgb#333333
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+// 颜色
+#define KZH_Black           RGBA(30, 30, 30, 1)         // 黑色字体
+#define KZH_Gray            RGBA(128, 128, 128, 1)      // 灰色字体
+#define KZH_Line_Gray       RGBA(200, 200, 200, 1)      // 灰色线
+
+#define KZH_Address_Gray    RGBA(200, 200, 200, 1)      // 灰色背景
+#define KZH_Back_Gray       RGBA(244, 244, 244, 1)      // 灰色背景
+
+#define KZH_Button_Blue RGBA(26, 176, 211, 1)     // 按钮颜色
+
+
+
+#define KZH_TITLE_COLOR  RGBA(51, 51, 51, 1)         // Nav 标题颜色
+
+#define KZH_RandomColor RGBA((arc4random() % 256), (arc4random() % 256), (arc4random() % 256), 1)   // 随机色
+
+
+
+// 字体
+#define KZHFONT_12        [UIFont systemFontOfSize:12.]
+#define KZHFONT_14        [UIFont systemFontOfSize:14.]
+#define KZHFONT_16        [UIFont systemFontOfSize:16.]
+
+
+#define FONT_Helvetica_12   [UIFont fontWithName:@"Helvetica-Bold" size:12]
+#define FONT_Helvetica_14   [UIFont fontWithName:@"Helvetica-Bold" size:14]
+#define FONT_Helvetica_16   [UIFont fontWithName:@"Helvetica-Bold" size:16]
+#define FONT_Helvetica_18   [UIFont fontWithName:@"Helvetica-Bold" size:18]
+
+
+
+/* userfriendType
+ 1 = 等待好友确认
+ 2 = 已验证
+ 3 = 新申请
+ 4 = 拒绝
+ */
+#define KZHFriend_Wait    @"1"
+#define KZHFriend_OK      @"2"
+#define KZHFriend_NEW     @"3"
+#define KZHFriend_Refuse  @"4"
+
+
+
+#endif

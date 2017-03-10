@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'LittleSure' do
+
+
+pod 'BmobSDK'
+pod 'TZImagePickerController'
+pod 'FMDB'
+pod 'IQKeyboardManager', '~> 4.0.8'
+
+end
